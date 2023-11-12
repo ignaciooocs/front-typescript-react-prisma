@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.link::after {
+    content: "";
+    position: relative;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    border-bottom: 2px #2ad solid;
+    animation: identifier 0.3s linear 1;
+  }
+
+@keyframes identifier {
+  from {
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
+}
+
+.label {
+  position: absolute;
+  left: 15px;
+  top: 25%;
+  z-index: 10;
+  transition: all .3s;
+  color: #444;
+  letter-spacing: 1px;
+}
+
+input {
+  z-index: 20;
+}
+
+input:focus ~ .label {
+  top: -27px;
+  left: 5px;
+}
+
+.label-focus {
+  top: -27px;
+  left: 5px;
+}
