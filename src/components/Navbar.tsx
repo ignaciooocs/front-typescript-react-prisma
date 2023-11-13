@@ -9,7 +9,7 @@ export default function Navbar () {
 
   const { token, setUser } = useAuthStore()
   return (
-    <nav className='h-16 flex items-center justify-center'>
+    <nav className='h-16 flex items-center justify-center opacidad'>
         <ul className='w-3/4 flex gap-x-5 justify-end'>
           <Link className={`font-bold text-center text-slate-500 py-1 ${location.pathname === '/' ? 'link' : ''}  `} to="/">Home</Link>
           {token && 

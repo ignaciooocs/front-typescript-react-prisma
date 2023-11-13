@@ -1,6 +1,7 @@
 import { useAuthStore } from "../states/useAuthStore"
 import { ChangeEvent, FormEvent, useState } from "react"
 import { useQueryClient } from '@tanstack/react-query'
+import { IoArrowForwardCircleOutline } from 'react-icons/io5'
 
 export default function CreateNote() {
   const { token, error, setError } = useAuthStore()
@@ -43,21 +44,22 @@ export default function CreateNote() {
       console.log('Ocurrio un error al crear la nota')
     }
   }
+
   return (
-    <form onSubmit={handleSubmit} className="flex w-3/5 flex-col gap-6">
+    <form onSubmit={handleSubmit} className="flex w-5/6 md:w-3/5 flex-col gap-6">
         <section className="flex flex-col gap-10">
-          <section className="flex flex-col gap-2 relative bg-gray-200">
+          <section className="flex flex-col gap-2 relative opacidad bg-gray-200">
             <input className="border p-4 bg-transparent" type="text" name="title" value={input.title} onChange={handleChange} />
             <label className={`label ${input.title !== '' ? 'label-focus' : ''}`}>Ingresar title</label>
           </section>
-          <section className="flex flex-col gap-2 relative bg-gray-200">
+          <section className="flex flex-col gap-2 relative opacidad bg-gray-200">
             <input className="border-none p-4 bg-transparent" type="text" name="body" value={input.body} onChange={handleChange} />
             <label className={`label ${input.body !== '' ? 'label-focus' : ''}`}>Ingresar contenido</label>
           </section>
         </section>
         {error && <p className="error text-red-500">{error}</p>}
         <section>
-          <button className="bg-blue-500 text-white rounded-md px-3 py-2" type="submit">Crear</button>
+          <button className="flex gap-3 items-center bg-blue-500 text-white rounded-md px-3 py-2" type="submit">Crear <IoArrowForwardCircleOutline /></button>
         </section>
       </form>
   )
