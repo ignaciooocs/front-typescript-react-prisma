@@ -5,6 +5,7 @@ import SignIn from '../pages/SignIn'
 import SignUp from '../pages/SignUp'
 import Dashboard from '../pages/Dashboard'
 import Note from '../pages/Note'
+import Create from '../pages/Create'
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <Dashboard />
+      },
+      {
+        path: '/dashboard/create',
+        element: <Create />
       },
       {
         path: '/note/:id',

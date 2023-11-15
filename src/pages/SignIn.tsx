@@ -31,10 +31,10 @@ export default function SignIn () {
         credentials: 'include'
       })
       const data = await res.json()
-      console.log(res)
       if (res.status === 200) {
         console.log(data)
         setUser({ token: data.token!, expiresIn: data.expiresIn! })
+        setError(false)
       } else {
         setError(data.error)
         throw data

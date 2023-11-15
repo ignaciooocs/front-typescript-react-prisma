@@ -1,3 +1,14 @@
+export const getAllNotes = async (token: string) => {
+  const res = await fetch('http://localhost:4000/api/notes', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  if (res.status === 401) return { error: 'Unauthorized'}
+  return await res.json()
+}
+
 export const updateNote = async ({ note, id, token }: { note: { body: string, title: string }, id: string, token: string }) => {
   try {
     await fetch('http://localhost:4000/api/notes/'+id, {

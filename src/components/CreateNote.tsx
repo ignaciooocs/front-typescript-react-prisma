@@ -1,11 +1,12 @@
 import { useAuthStore } from "../states/useAuthStore"
 import { ChangeEvent, FormEvent, useState } from "react"
-import { useQueryClient } from '@tanstack/react-query'
-import { IoArrowForwardCircleOutline } from 'react-icons/io5'
+import { useMutation } from '@tanstack/react-query'
+import { IoAddCircleOutline } from 'react-icons/io5'
+import { useNavigate } from "react-router-dom"
 
 export default function CreateNote() {
   const { token, error, setError } = useAuthStore()
-  const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   const [input, setinput] = useState<{title: string, body: string}>({
     title: '',
@@ -33,7 +34,7 @@ export default function CreateNote() {
       })
       const data = await res.json()
       if (res.status === 201) {
-        queryClient.invalidateQueries({ queryKey: ['Notes'] })
+        navigate('/dashboard')
         console.log(data)
       } else {
         setError(data.error)
@@ -44,9 +45,12 @@ export default function CreateNote() {
       console.log('Ocurrio un error al crear la nota')
     }
   }
+  const create = useMutation({ mutationFn: handleSubmit })
+
+  const empty = (!input.body.trim()) || (!input.title.trim())
 
   return (
-    <form onSubmit={handleSubmit} className="flex w-5/6 md:w-3/5 flex-col gap-6">
+    <form onSubmit={create.mutate} className="flex w-5/6 md:w-3/5 flex-col gap-6">
         <section className="flex flex-col gap-10">
           <section className="flex flex-col gap-2 relative opacidad bg-gray-200">
             <input className="border p-4 bg-transparent" type="text" name="title" value={input.title} onChange={handleChange} />
@@ -59,8 +63,10 @@ export default function CreateNote() {
         </section>
         {error && <p className="error text-red-500">{error}</p>}
         <section>
-          <button className="flex gap-3 items-center bg-blue-500 text-white rounded-md px-3 py-2" type="submit">Crear <IoArrowForwardCircleOutline /></button>
+          <button disabled={empty} className={`flex gap-3 items-center bg-blue-500 text-white rounded-md px-3 py-2 ${empty ? 'opacidad' : '' }`} type="submit">Crear <IoAddCircleOutline /></button>
         </section>
       </form>
   )
 }
+
+
