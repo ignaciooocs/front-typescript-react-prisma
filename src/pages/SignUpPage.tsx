@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom"
 import { useAuthStore } from "../states/useAuthStore"
 
-export default function SignUp () {
+export default function SignUpPage () {
   const { token } = useAuthStore()
 
   if (token) return <Navigate to="/dashboard"/>

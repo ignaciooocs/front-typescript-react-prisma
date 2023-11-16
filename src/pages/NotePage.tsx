@@ -1,15 +1,15 @@
 // import { Navigate } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
-import Notes from '../components/Notes'
+import Note from '../components/Note'
 import { useAuthStore } from '../states/useAuthStore'
 
-export default function Note () {
+export default function NotePage () {
 
   const { token } = useAuthStore()
 
   if (!token) return <Navigate to="/dashboard"/>
 
   return (
-    <Notes />
+    <Note />
   )
 }

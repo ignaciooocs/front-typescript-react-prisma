@@ -12,7 +12,7 @@ export interface Note {
   }
 
 
-export default function Notes () {
+export default function Note () {
   const { id } = useParams()
   const { token } = useAuthStore()
   
@@ -33,12 +33,10 @@ export default function Notes () {
   if (isLoading) return <p>Loading...</p>
   if (error) return <p>Error</p>
 
-  console.log(data)
-
   return (
     <section className="flex flex-col items-center gap-4 font-sans">
       <article className="flex flex-col items-center gap-4 w-5/6 md:w-1/2">
-        <h3 className="text-xl font-bold text-gray-600">{data?.title}</h3>
+        <h3 className="text-xl font-bold text-gray-600 py-5">{data?.title}</h3>
         {data && <InputNote note={data}/>}
       </article>
     </section>

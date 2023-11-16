@@ -1,7 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react"
 import { useAuthStore} from '../states/useAuthStore'
 import { Navigate } from 'react-router-dom'
-export default function SignIn () {
+
+export default function SignInPage () {
   const { token, setUser, setError, error } = useAuthStore()
 
   

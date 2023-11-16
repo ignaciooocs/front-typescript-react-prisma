@@ -1,11 +1,11 @@
 import { createBrowserRouter} from 'react-router-dom'
 import App from '../App'
-import Home from '../pages/Home'
-import SignIn from '../pages/SignIn'
-import SignUp from '../pages/SignUp'
-import Dashboard from '../pages/Dashboard'
-import Note from '../pages/Note'
-import Create from '../pages/Create'
+import Home from '../pages/HomePage'
+import SignInPage from '../pages/SignInPage'
+import SignUpPage from '../pages/SignUpPage'
+import DashboardPage from '../pages/DashboardPage'
+import NotePage from '../pages/NotePage'
+import CreatePage from '../pages/CreatePage'
 
 export const router = createBrowserRouter([
   {
@@ -19,23 +19,23 @@ export const router = createBrowserRouter([
       },
       {
         path: '/dashboard',
-        element: <Dashboard />
+        element: <DashboardPage />
       },
       {
         path: '/dashboard/create',
-        element: <Create />
+        element: <CreatePage />
       },
       {
         path: '/note/:id',
-        element: <Note />
+        element: <NotePage />
       },
       {
         path: '/sign-in',
-        element: <SignIn />
+        element: <SignInPage />
       },
       {
         path: '/sign-up',
-        element: <SignUp />,
+        element: <SignUpPage />,
         loader: () => <section>Cargando...</section>
       }
     ]
