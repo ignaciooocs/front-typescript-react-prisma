@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useState } from "react"
 import { useMutation } from '@tanstack/react-query'
 import { IoAddCircleOutline } from 'react-icons/io5'
 import { useNavigate } from "react-router-dom"
+import { createNote } from "../services/noteServices"
 
 export default function CreateNote() {
   const { token, error, setError } = useAuthStore()
@@ -21,31 +22,10 @@ export default function CreateNote() {
     })
   }
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault()
-    try {
-      const res = await fetch('http://localhost:4000/api/notes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(input)
-      })
-      const data = await res.json()
-      if (res.status === 201) {
-        navigate('/dashboard')
-        console.log(data)
-      } else {
-        setError(data.error)
-        throw data
-      }
-    } catch (error) {
-      console.log(error)
-      console.log('Ocurrio un error al crear la nota')
-    }
-  }
-  const create = useMutation({ mutationFn: handleSubmit })
+  const create = useMutation({ 
+    mutationFn: (e: FormEvent<HTMLFormElement>) => 
+      createNote({ e , input, token: token as string, navigate, setError }) 
+  })
 
   const empty = (!input.body.trim()) || (!input.title.trim())
 
