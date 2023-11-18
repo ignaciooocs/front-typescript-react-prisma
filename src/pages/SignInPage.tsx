@@ -1,16 +1,16 @@
 import { ChangeEvent, FormEvent, useState } from "react"
-import { useAuthStore} from '../states/useAuthStore'
+import { useAuthStore } from '../states/useAuthStore'
 import { Navigate } from 'react-router-dom'
 
-export default function SignInPage () {
+export default function SignInPage() {
   const { token, setUser, setError, error } = useAuthStore()
 
-  
-  const [input, setinput] = useState<{email: string, password: string}>({
+
+  const [input, setinput] = useState<{ email: string, password: string }>({
     email: '',
     password: ''
   })
-  if (token) return <Navigate to="/dashboard"/>
+  if (token) return <Navigate to="/dashboard/1" />
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setError(false)
@@ -41,15 +41,15 @@ export default function SignInPage () {
         throw data
       }
     } catch (error) {
-        console.log(error)
-        console.log('Ocurrio un error en el sign in')
+      console.log(error)
+      console.log('Ocurrio un error en el sign in')
     }
   }
 
   return (
     <section className="grid grid-cols-6 h-screen">
       <section className="flex flex-col items-center gap-y-4 col-start-1 col-end-5">
-        <h2 className="font-bold text-3xl text-white font-mono text-center mp-8"><span className="text-blue-300">Welcome</span> to the best <br/> application</h2>
+        <h2 className="font-bold text-3xl text-white font-mono text-center mp-8"><span className="text-blue-300">Welcome</span> to the best <br /> application</h2>
       </section>
       <section className="flex flex-col items-center justify-center gap-y-4 col-start-5 col-end-12 h-full opacidad">
         <h3 className="font-bold text-gray-500 space-x-1 my-5">Iniciar sesión</h3>

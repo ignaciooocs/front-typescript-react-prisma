@@ -7,7 +7,7 @@ import { deleteNote, updateNote } from "../services/noteServices";
 import { IoArrowForwardCircleOutline, IoCloseCircleOutline } from 'react-icons/io5'
 import { motion } from "framer-motion";
 
-export default function InputNote ({ note: nota }: { note: Note }) {
+export default function InputNote({ note: nota, page }: { note: Note, page: string }) {
   const navigate = useNavigate()
   const { token } = useAuthStore()
 
@@ -24,21 +24,21 @@ export default function InputNote ({ note: nota }: { note: Note }) {
     })
   }
 
-  const mutationDpdate = useMutation({
+  const mutationUpdate = useMutation({
     mutationFn: () => updateNote({ note, id: nota.id, token: token as string }),
     onSuccess: () => {
-      navigate('/dashboard')
+      navigate(`/dashboard/${page}`)
     }
   })
 
   const mutationDelete = useMutation({
     mutationFn: () => deleteNote({ id: nota.id, token: token as string }),
     onSuccess: () => {
-      navigate('/dashboard')
+      navigate(`/dashboard/${page}`)
     }
   })
 
-  const change = (note.body !== nota.body) 
+  const change = (note.body !== nota.body)
 
   const opacity = {
     hidden: { opacity: 0 },
@@ -46,26 +46,26 @@ export default function InputNote ({ note: nota }: { note: Note }) {
   };
 
   return (
-    <motion.section 
+    <motion.section
       variants={opacity}
       initial="hidden"
       animate="visible"
       className="flex flex-col items-center gap-4 w-full">
-      <textarea className="opacidad font-sans font-bold text-gray-500 w-full font-sans space-x-5 text-lg p-2 h-48" value={note.body} name="body" onChange={handleChange}/>
+      <textarea className="opacidad font-sans font-bold text-gray-500 w-full space-x-5 text-lg p-2 h-48" value={note.body} name="body" onChange={handleChange} />
       <section className="flex gap-4">
-        <button 
+        <button
           className={`flex gap-x-3 items-center text-blue-400 opacidad font-bold py-2 px-4 rounded hover:bg-blue-400 hover:text-white`}
-          disabled={!change} 
-          onClick={() => mutationDpdate.mutate()}
+          disabled={!change}
+          onClick={() => mutationUpdate.mutate()}
         >
           Guardar <IoArrowForwardCircleOutline />
         </button>
-        <button 
-          className="flex gap-x-3 items-center text-red-400 opacidad font-bold py-2 px-4 rounded hover:bg-red-400 hover:text-white" 
+        <button
+          className="flex gap-x-3 items-center text-red-400 opacidad font-bold py-2 px-4 rounded hover:bg-red-400 hover:text-white"
           onClick={() => mutationDelete.mutate()}
-          >
-            Eliminar <IoCloseCircleOutline />
-          </button>
+        >
+          Eliminar <IoCloseCircleOutline />
+        </button>
       </section>
     </motion.section>
   )

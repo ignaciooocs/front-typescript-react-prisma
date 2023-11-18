@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 interface IUseAuthStore {
-  token: string | boolean, 
+  token: string | boolean | null,
   expiresIn: number | boolean
   setUser: (prop: { token: string | boolean, expiresIn: number | boolean }) => void
   refreshToken: () => void,
@@ -11,7 +11,7 @@ interface IUseAuthStore {
 
 // Crea una tienda de estado global con zustand
 export const useAuthStore = create<IUseAuthStore>((set) => ({
-  token: false, 
+  token: null,
   expiresIn: false,
   error: false,
   setUser: (prop: { token: string | boolean, expiresIn: number | boolean }) => set(() => ({ token: prop.token, expiresIn: prop.expiresIn })),
@@ -26,10 +26,11 @@ export const useAuthStore = create<IUseAuthStore>((set) => ({
       if (newToken.status === 201) {
         set({ token: data.refresh!, expiresIn: data.expiresIn! });
       } else {
+        set({ token: false, expiresIn: false });
         throw data
       }
-  } catch (error) {
-    console.log(error)
-  }
+    } catch (error) {
+      console.log(error)
     }
+  }
 }));
