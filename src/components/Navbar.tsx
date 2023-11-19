@@ -1,38 +1,36 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuthStore } from "../states/useAuthStore";
-import { IoExitOutline } from 'react-icons/io5'
-import { useQueryClient } from "@tanstack/react-query";
+import { IoCreateOutline, IoMenuOutline } from 'react-icons/io5'
+import { useState } from "react"
+import Menu from "./Menu";
 
 export default function Navbar() {
   const location = useLocation()
-  const queryClient = useQueryClient()
+  const [menu, setmenu] = useState(false)
+  const { token } = useAuthStore()
 
-  const { token, setUser } = useAuthStore()
   return (
-    <nav className='h-16 flex items-center justify-center opacidad'>
-      <ul className='w-3/4 flex gap-x-5 justify-end'>
-        <Link className={`font-bold text-center text-slate-500 py-1 ${location.pathname === '/' ? 'link' : ''}  `} to="/">Home</Link>
-        {token &&
-          <>
-            <Link className={`font-bold text-center text-slate-500 py-1 ${location.pathname === '/dashboard/home' ? 'link' : ''}`} to="/dashboard/1">Dashboard</Link>
-            <button className="text-red-500 flex gap-x-2 items-center" onClick={async () => {
-              const res = await fetch('http://localhost:4000/api/auth/sign-out', {
-                credentials: 'include'
-              })
-              const data = await res.json()
-              console.log(data)
-              setUser({ token: false, expiresIn: false })
-              queryClient.clear()
-            }}>Logout <IoExitOutline className='text-red-500' /></button>
-          </>
-        }
-        {!token &&
-          <>
-            <Link className={`font-bold text-center text-slate-500 py-1 ${location.pathname === '/sign-in' ? 'link' : ''}`} to="/sign-in">Sign In</Link>
-            <Link className={`font-bold text-center text-slate-500 py-1 ${location.pathname === '/sign-up' ? 'link' : ''}`} to="/sign-up">Sign Up</Link>
-          </>
-        }
+    <nav className='nav h-20 flex items-center justify-center sticky top-0 z-50'>
+      <ul className='w-3/4 flex justify-between relative'>
+        <Link className={`font-bold text-center text-slate-500 py-1 ${location.pathname === '/' ? 'link' : ''} `} to="/">
+          <span className="flex gap-x-2 items-center">SpaceNotes <IoCreateOutline /></span>
+        </Link>
+        <section className='flex gap-x-8 items-center'>
+          {token
+            ? (
+              <>
+                <Link className={`font-bold text-center text-slate-500 py-1 ${location.pathname.includes("/dashboard") ? 'link' : ''}`} to="/dashboard/1">Mis notas</Link>
+                <button className="text-red-500 flex gap-x-2 items-center" onClick={() => setmenu(!menu)} ><IoMenuOutline className='text-gray-500 text-2xl' /></button>
+              </>
+            ) : (
+              <>
+                <Link className={`font-bold text-center text-slate-500 py-1 ${location.pathname === '/sign-in' ? 'link' : ''}`} to="/sign-in">Sign In</Link>
+                <Link className={`font-bold text-center text-slate-500 py-1 ${location.pathname === '/sign-up' ? 'link' : ''}`} to="/sign-up">Sign Up</Link>
+              </>
+            )}
+        </section>
       </ul>
+      {menu && <Menu menu={menu} setmenu={setmenu} />}
     </nav>
   )
 }

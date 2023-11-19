@@ -27,6 +27,10 @@ export default function NotesList() {
         Lista de notas
       </motion.h3>
       <motion.ul
+        layout
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
         className="flex flex-col gap-4 w-full px-3 md:w-3/4">
         {data?.notes.map((note: Note) => (
           <ItemNote key={note.id} note={note} />
